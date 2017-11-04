@@ -60,14 +60,14 @@ const byte END_OF_FRAME_2 = 0x00;
 const byte END_OF_FRAME_3 = 0x7F;
 
 #ifdef DEBUG
-    #define dbg_print(x)    Serial.print (x)
-    #define dbg_print_hex(x)    Serial.print (x,HEX)
-    #define dbg_println(x)  Serial.println (x)
+    #define dbg_print(x)          Serial.print (x)
+    #define dbg_print_hex(x)      Serial.print (x,HEX)
+    #define dbg_println(x)        Serial.println (x)
     #define dbg_println_hex(x,y)  Serial.println (x,HEX)
-    #define dbg2_print(x)    Serial2.print (x)
-    #define dbg2_println(x)  Serial2.println (x)
-    #define dbg_line() Serial.print("line : ");Serial.print(__LINE__)
-    #define dbg_lineln() Serial.print("line : ");Serial.println(__LINE__)
+    #define dbg2_print(x)         Serial2.print (x)
+    #define dbg2_println(x)       Serial2.println (x)
+    #define dbg_line()            Serial.print("line : ");Serial.print(__LINE__)
+    #define dbg_lineln()          Serial.print("line : ");Serial.println(__LINE__)
 #else
     #define dbg_print(x)
     #define dbg_print_hex(x)

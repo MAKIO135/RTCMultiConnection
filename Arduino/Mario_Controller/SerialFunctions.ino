@@ -11,6 +11,7 @@ void serialEvent(){
     //Get Command
     if (mySerial.available()){
         byCmd = mySerial.read(); //Read the command
+        dbg_print( byCmd );
         if (bStatus = waitForIncomingData(mySerial)){
             byDataSize = mySerial.read(); //Read the embedded data size
             if(byDataSize >= MAX_VAR) byDataSize = MAX_VAR - 1;

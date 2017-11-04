@@ -132,9 +132,9 @@
 #include "PinChangeInt.h"
 #include "PinChangeIntConfig.h"
 
-#include "Definitions.h"
-
 #define DEBUG
+
+#include "Definitions.h"
 
 // internal data
 boolean bDataReceived = false;  // whether the data is received
@@ -179,10 +179,6 @@ MotorWheel wheel4(MOTOR4_ENABLE_PIN, MOTOR4_DIRECTION_PIN, MOTOR4_IRQ_PIN, MOTOR
 Omni4WD Ubbo(&wheel1,&wheel3,&wheel2,&wheel4);
 
 void setup(){
-    // pinMode(DOCK_RELAY_PIN, OUTPUT);
-    // pinMode(DOCKED_DIGITAL_PIN, INPUT);
-    // digitalWrite(DOCKED_DIGITAL_PIN, LOW);
-
     //Initialize robot PWM
     delay(2000);
     TCCR1B=TCCR1B&0xf8|0x01; // Pin12 &11 PWM 31250Hz
@@ -197,11 +193,8 @@ void setup(){
 
     // initialize serials:
     Serial.begin(9600);
-    Serial.println("Serial");
     Serial2.begin(9600);
-    Serial2.println("Serial2");
     Serial3.begin(9600);
-    Serial3.println("Serial3");
     dbg_println("Wait for a command:");
     dbg2_println("Ready to Send:");
 
