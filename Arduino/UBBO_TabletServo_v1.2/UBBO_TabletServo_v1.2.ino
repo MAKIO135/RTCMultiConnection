@@ -144,8 +144,7 @@ void serialEvent(){
                     dbg_print("ETX detected.");
 
                     // Wait until ETX and the end of the slide movement
-                    if (Serial.available() == 0)
-                    {
+                    if (Serial.available() == 0){
                         bDataReceived = true;
                         break;
                     }

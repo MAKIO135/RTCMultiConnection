@@ -62,7 +62,7 @@ void  moveTablet(int iReqValue){
 
     // map value received from 0->127 to 0->180.
     iReqPos = map( iReqValue,0,127,0,180 );
-    Serial3.write(STX);
-    Serial3.write(iReqPos);
-    Serial3.write(ETX);
+    Serial3.write( STX );
+    Serial3.write( iReqPos );
+    Serial3.write( ETX );
 }

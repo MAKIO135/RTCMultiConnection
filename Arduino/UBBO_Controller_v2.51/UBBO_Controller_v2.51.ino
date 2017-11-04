@@ -134,7 +134,7 @@
 
 #include "Definitions.h"
 
-//#define DEBUG
+#define DEBUG
 
 // internal data
 boolean bDataReceived = false;  // whether the data is received
@@ -176,12 +176,12 @@ MotorWheel wheel3(MOTOR3_ENABLE_PIN, MOTOR3_DIRECTION_PIN, MOTOR3_IRQ_PIN, MOTOR
 irqISR(irq4,isr4);
 MotorWheel wheel4(MOTOR4_ENABLE_PIN, MOTOR4_DIRECTION_PIN, MOTOR4_IRQ_PIN, MOTOR4_IRQB_PIN,&irq4);
 
-Omni4WD Ubbo(&wheel1,&wheel3,&wheel2,&wheel4);  //Reversing back wheels (2 & 3) to get the good config after setting the final good positions of wheels - Not yet identify The reason why
+Omni4WD Ubbo(&wheel1,&wheel3,&wheel2,&wheel4);
 
 void setup(){
-    pinMode(DOCK_RELAY_PIN, OUTPUT);
-    pinMode(DOCKED_DIGITAL_PIN, INPUT);
-    digitalWrite(DOCKED_DIGITAL_PIN, LOW);
+    // pinMode(DOCK_RELAY_PIN, OUTPUT);
+    // pinMode(DOCKED_DIGITAL_PIN, INPUT);
+    // digitalWrite(DOCKED_DIGITAL_PIN, LOW);
 
     //Initialize robot PWM
     delay(2000);
@@ -197,8 +197,11 @@ void setup(){
 
     // initialize serials:
     Serial.begin(9600);
+    Serial.println("Serial");
     Serial2.begin(9600);
+    Serial2.println("Serial2");
     Serial3.begin(9600);
+    Serial3.println("Serial3");
     dbg_println("Wait for a command:");
     dbg2_println("Ready to Send:");
 
@@ -254,8 +257,7 @@ void loop(){
                     if (iMessageSize == 1){
                         moveTablet(byPosition);
                     }
-                    else
-                    dbg_println("bad \"move tablet\" message format");
+                    else dbg_println("bad \"move tablet\" message format");
                     break;
 
                 default: // Other
