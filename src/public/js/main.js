@@ -64,7 +64,7 @@ document.querySelector('#join-room').addEventListener('click', e => {
     function sendCmd() {
         if (cmd != '' && socketReady) {
             socket.emit('cmd', { roomid, cmd });
-            setTimeout(sendCmd, 500);
+            setTimeout( sendCmd, 400 );
         }
     }
 });
