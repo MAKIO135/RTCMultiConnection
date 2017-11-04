@@ -40,9 +40,9 @@ document.querySelector( '#open-room' ).addEventListener( 'click', () => {
 
     localStorage.setItem( connection.socketMessageEvent, roomid );
 
-    /*terminal.connect().then( () => {
+    terminal.connect().then( () => {
         console.log( `connected to ${ terminal.getDeviceName() }` );
-    } );*/
+    } );
 
     connection.open( roomid, () => {
         document.querySelector( '#pre-room' ).classList.toggle( 'hidden' );
@@ -54,7 +54,7 @@ document.querySelector( '#open-room' ).addEventListener( 'click', () => {
             socket.on( 'cmd', data => {
                 console.log( data );
                 if( data.roomid === roomid ){
-                    //terminal.send( data.cmd ).then( () => console.log( data, 'out' ) ).catch( error => console.log( error ) );
+                    terminal.send( data.cmd ).then( () => console.log( data, 'out' ) ).catch( error => console.log( error ) );
                 }
             } );
         } );
