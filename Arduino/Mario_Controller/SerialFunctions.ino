@@ -5,6 +5,7 @@ void serialEvent(){
     if( mySerial.available() ){
         cmd = mySerial.read();
     }
+    mySerial.flush();
 }
 
 void serialEvent2(){
@@ -14,4 +15,5 @@ void serialEvent2(){
     if( mySerial.available() ){
         cmd = mySerial.read();
     }
+    mySerial.flush();
 }
