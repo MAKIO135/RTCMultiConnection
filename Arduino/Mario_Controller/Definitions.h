@@ -1,7 +1,3 @@
-// For tablet serial prot
-const char STX = '<';
-const char ETX = '>';
-
 //Speed / accel parameters
 const int iSpeed = 400; // Initially 300
 const int iSpeedTranslate = 300; // Initially 300
@@ -42,22 +38,19 @@ const int MOTOR4_IRQB_PIN = 34;
 const char GO_FORWARD = 'f';
 const char GO_BACKWARD = 'b';
 const char STOP = 's';
-const char GO_BACK_DOCKSTATION = 0x4;
-const char TRANSLATE_LEFT = 0x08;
-const char TRANSLATE_RIGHT = 0x09;
-const char MOVE_TABLET = 0x10;
+const char TRANSLATE_LEFT = 'a';
+const char TRANSLATE_RIGHT = 'z';
 const char MOVE_TABLET_UP = 'u';
 const char MOVE_TABLET_DOWN = 'd';
-const char HEART_BEAT = 0x11;
 const char TURN_LEFT = 'l';
 const char TURN_RIGHT = 'r';
 
 //Nb max of variable in the message
-const int MAX_VAR= 10;
+const int MAX_VAR = 10;
 
-const byte END_OF_FRAME_1 = 0x7F;
-const byte END_OF_FRAME_2 = 0x00;
-const byte END_OF_FRAME_3 = 0x7F;
+// const byte END_OF_FRAME_1 = 0x7F;
+// const byte END_OF_FRAME_2 = 0x00;
+// const byte END_OF_FRAME_3 = 0x7F;
 
 #ifdef DEBUG
     #define dbg_print(x)          Serial.print (x)
