@@ -1,3 +1,24 @@
+const useBT = ! window.location.origin.includes( 'localhost' );
+
+const log = document.createElement( 'p' );
+log.style.width = '100vw';
+log.style.height = '50px';
+log.style.overflowY = 'scroll';
+log.style.position = 'absolute';
+log.style.top = '0';
+log.style.left = '0';
+log.style.background = 'black';
+log.style.color = 'white';
+log.style.fontFamily = 'monospace';
+document.body.appendChild( log );
+
+function println(){
+    [ ...arguments ].forEach( arg => {
+        log.innerHTML += arg + '<br>';
+        log.scrollTop += 50;
+    } );
+}
+
 $(document).ready(function () {
     $('select').material_select();
 });
@@ -11,24 +32,16 @@ function getSelectedText(elementId) {
     return elt.options[elt.selectedIndex].text;
 }
 
-// mobileConsole
-// addEventListener( 'load', e => {
-//     mobileConsole.init();
-// } );
-
 // Blue web
 let terminal = new BluetoothTerminal();
 
 terminal.receive = data => {
-    console.log( data, 'in' );
+    println( data + ' in' );
 };
 
 terminal._log = ( ...messages ) => {
     messages.forEach( message => {
-        console.log( message );
-        // let p = document.createElement( 'p' );
-        // p.innerText = message;
-        // document.body.appendChild(p);
+        if( message ) println( message );
     } );
 };
 
@@ -40,21 +53,25 @@ document.querySelector( '#open-room' ).addEventListener( 'click', () => {
 
     localStorage.setItem( connection.socketMessageEvent, roomid );
 
-    terminal.connect().then( () => {
-        console.log( `connected to ${ terminal.getDeviceName() }` );
-    } );
+    if( useBT ){
+        terminal.connect().then( () => {
+            println( `connected to ${ terminal.getDeviceName() }` );
+        } );
+    }
 
-    connection.open( roomid, () => {
+    connection.open( 'debug-' + roomid, () => {
         document.querySelector( '#pre-room' ).classList.toggle( 'hidden' );
         document.querySelector( '#in-room' ).classList.toggle( 'hidden' );
         document.querySelector('#mainContainer').classList.toggle('bottom');
-        console.log( `Join bot here: https://makerschat.herokuapp.com/#${ connection.sessionid }` );
+        println( `Join bot here: https://makerschat.herokuapp.com/#${ connection.sessionid }` );
 
         connection.getSocket( socket => {
             socket.on( 'cmd', data => {
-                console.log( data );
+                println( data );
                 if( data.roomid === roomid ){
-                    terminal.send( data.cmd ).then( () => console.log( data, 'out' ) ).catch( error => console.log( error ) );
+                    if( useBT ){
+                        terminal.send( data.cmd ).then( () => println( data + ' out' ) ).catch( error => println( error ) );
+                    }
                 }
             } );
         } );

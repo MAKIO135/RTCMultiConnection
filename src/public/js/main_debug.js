@@ -36,7 +36,7 @@ function getSelectedText(elementId) {
 let terminal = new BluetoothTerminal();
 
 terminal.receive = data => {
-    println( data, 'in' );
+    println( data + ' in' );
 };
 
 terminal._log = ( ...messages ) => {
@@ -70,7 +70,7 @@ document.querySelector( '#open-room' ).addEventListener( 'click', () => {
                 println( data );
                 if( data.roomid === roomid ){
                     if( useBT ){
-                        terminal.send( data.cmd ).then( () => println( data, 'out' ) ).catch( error => println( error ) );
+                        terminal.send( data.cmd ).then( () => println( data + ' out' ) ).catch( error => println( error ) );
                     }
                 }
             } );
@@ -91,7 +91,7 @@ document.querySelector( '#open-room' ).addEventListener( 'click', () => {
     function sendCmd() {
         if (cmd != '' ) {
             if( useBT ){
-                terminal.send( cmd ).then( () => println( cmd, 'out' ) ).catch( error => println( error ) );
+                terminal.send( cmd ).then( () => println( cmd + ' out' ) ).catch( error => println( error ) );
             }
             else{
                 println( `sending ${ cmd }` );
