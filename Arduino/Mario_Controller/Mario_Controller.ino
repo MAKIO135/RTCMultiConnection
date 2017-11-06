@@ -36,67 +36,39 @@ char cmd = 0;
 int timeout = 500;
 int direction = 90;
 
-// internal data
-boolean bDataReceived = false;  // whether the data is received
-unsigned long ulTimeSensor; //Time in milliseconds
-unsigned long ulTimeSensorStart; //Time in milliseconds
-int iTempoSensor; // Tempo counter
-int iTempoSensorMax = 250; // Tempo for sensor check
-boolean bTimeoutSensorDetected = false; //Timeout detection state
-
-//Protocol variables
-String sData = "";   // a string to hold incoming data
-int iMessageSize = 0;
-int iNbVar= 0;
-byte byCmd = 0;
-byte byPosition = 0;
-byte byPreviousCmd = 0;
-int iPreviousAngle = 0;
-byte byMessage[MAX_VAR]; // a char to hold incoming data
-byte byVarType[MAX_VAR];
-byte byVarValue[MAX_VAR];
-
-//Timer data
-unsigned long ulTime; //Time in milliseconds
-unsigned long ulTimeStart; //Time in milliseconds
-int iTempo; // Tempo counter
-int iTempoMax = 1500; // Tempo until no key is pressed
-boolean bTimeoutDetected = false; //Timeout detection state
-
 // Declaration of Motors and encoders (pinouts)
-irqISR(irq1,isr1);
-MotorWheel wheel1(MOTOR1_ENABLE_PIN, MOTOR1_DIRECTION_PIN, MOTOR1_IRQ_PIN, MOTOR1_IRQB_PIN,&irq1);
+irqISR( irq1, isr1 );
+MotorWheel wheel1( MOTOR1_ENABLE_PIN, MOTOR1_DIRECTION_PIN, MOTOR1_IRQ_PIN, MOTOR1_IRQB_PIN, &irq1 );
 
-irqISR(irq2,isr2);
-MotorWheel wheel2(MOTOR2_ENABLE_PIN, MOTOR2_DIRECTION_PIN, MOTOR2_IRQ_PIN, MOTOR2_IRQB_PIN,&irq2);
+irqISR( irq2, isr2 );
+MotorWheel wheel2( MOTOR2_ENABLE_PIN, MOTOR2_DIRECTION_PIN, MOTOR2_IRQ_PIN, MOTOR2_IRQB_PIN, &irq2 );
 
-irqISR(irq3,isr3);
-MotorWheel wheel3(MOTOR3_ENABLE_PIN, MOTOR3_DIRECTION_PIN, MOTOR3_IRQ_PIN, MOTOR3_IRQB_PIN,&irq3);
+irqISR( irq3, isr3 );
+MotorWheel wheel3( MOTOR3_ENABLE_PIN, MOTOR3_DIRECTION_PIN, MOTOR3_IRQ_PIN, MOTOR3_IRQB_PIN, &irq3 );
 
-irqISR(irq4,isr4);
-MotorWheel wheel4(MOTOR4_ENABLE_PIN, MOTOR4_DIRECTION_PIN, MOTOR4_IRQ_PIN, MOTOR4_IRQB_PIN,&irq4);
+irqISR( irq4, isr4 );
+MotorWheel wheel4( MOTOR4_ENABLE_PIN, MOTOR4_DIRECTION_PIN, MOTOR4_IRQ_PIN, MOTOR4_IRQB_PIN, &irq4 );
 
-Omni4WD Ubbo(&wheel1,&wheel3,&wheel2,&wheel4);
+Omni4WD Ubbo( &wheel1, &wheel3, &wheel2, &wheel4 );
 
 void setup(){
     //Initialize robot PWM
-    delay(2000);
-    TCCR1B=TCCR1B&0xf8|0x01; // Pin12 &11 PWM 31250Hz
-    TCCR2B=TCCR2B&0xf8|0x01; // Pin9,Pin10 PWM 31250Hz
-    TCCR3B=TCCR3B&0xf8|0x01; // Pin 5,3, 2 PWM 31250Hz
-    TCCR4B=TCCR4B&0xf8|0x01; // Pin8,7,6 PWM 31250Hz
+    delay( 2000 );
+    TCCR1B = TCCR1B & 0xf8 | 0x01; // Pin12 &11 PWM 31250Hz
+    TCCR2B = TCCR2B & 0xf8 | 0x01; // Pin9,Pin10 PWM 31250Hz
+    TCCR3B = TCCR3B & 0xf8 | 0x01; // Pin 5,3, 2 PWM 31250Hz
+    TCCR4B = TCCR4B & 0xf8 | 0x01; // Pin8,7,6 PWM 31250Hz
 
     //Init motors and PID
-    Ubbo.PIDEnable(1.0,0.8,0.5,10);
-    Ubbo.setAcceleration(fAcceleration);
-    Ubbo.setDeceleration(fDeceleration);
+    Ubbo.PIDEnable( 1.0, 0.8, 0.5, 10 );
+    Ubbo.setAcceleration( fAcceleration );
+    Ubbo.setDeceleration( fDeceleration );
 
     // initialize serials:
-    Serial.begin(9600);
-    Serial2.begin(9600);
-    Serial3.begin(9600);
-    dbg_println("Wait for a command:");
-    dbg2_println("Ready to Send:");
+    Serial.begin( 9600 );
+    Serial2.begin( 9600 );
+    Serial3.begin( 9600 );
+    Serial.println( "Waiting for commands ..." );
 }
 
 void loop(){
@@ -106,7 +78,7 @@ void loop(){
 
         switch ( cmd ) {
             case GO_FORWARD:
-                Ubbo.doMovement(Omni4WD::STAT_MOVE_FORWARD, iSpeed);
+                Ubbo.doMovement( Omni4WD::STAT_MOVE_FORWARD, iSpeed );
                 break;
 
             case GO_BACKWARD:
@@ -115,24 +87,24 @@ void loop(){
 
             case TURN_LEFT:
                 timeout = 100;
-                Ubbo.doMovement(Omni4WD::STAT_TURN_LEFT, iSpeedTurn);
+                Ubbo.doMovement( Omni4WD::STAT_TURN_LEFT, iSpeedTurn );
                 break;
 
             case TURN_RIGHT:
                 timeout = 100;
-                Ubbo.doMovement(Omni4WD::STAT_TURN_RIGHT, iSpeedTurn);
+                Ubbo.doMovement( Omni4WD::STAT_TURN_RIGHT, iSpeedTurn );
                 break;
 
             case TRANSLATE_LEFT:
-                Ubbo.doMovement(Omni4WD::STAT_TRANSLATE_LEFT, iSpeedTranslate);
+                Ubbo.doMovement( Omni4WD::STAT_TRANSLATE_LEFT, iSpeedTranslate );
                 break;
 
             case TRANSLATE_RIGHT:
-                Ubbo.doMovement(Omni4WD::STAT_TRANSLATE_RIGHT, iSpeedTranslate);
+                Ubbo.doMovement( Omni4WD::STAT_TRANSLATE_RIGHT, iSpeedTranslate );
                 break;
 
             case STOP:
-                Ubbo.doMovement(Omni4WD::STAT_STOP);
+                Ubbo.doMovement( Omni4WD::STAT_STOP );
                 break;
 
             case MOVE_TABLET_UP: // Move Tablet Servo
@@ -141,13 +113,13 @@ void loop(){
                 break;
 
             default: // Other
-                dbg_println("Unknown command");
+                Serial.println( "Unknown command" );
                 break;
         }
     }
     else{
         if( millis() - timer > timeout ){
-            Ubbo.doMovement(Omni4WD::STAT_STOP);
+            Ubbo.doMovement( Omni4WD::STAT_STOP );
         }
     }
 
