@@ -26,9 +26,6 @@
 #include "PID.h"
 #include "PinChangeInt.h"
 #include "PinChangeIntConfig.h"
-
-#define DEBUG
-
 #include "Definitions.h"
 
 long timer = 0;

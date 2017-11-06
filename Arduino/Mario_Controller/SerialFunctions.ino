@@ -1,19 +1,15 @@
 void serialEvent(){
-    HardwareSerial &mySerial = Serial;
-    cmd = 0;
-
-    if( mySerial.available() ){
-        cmd = mySerial.read();
-    }
-    mySerial.flush();
+    readSerial( Serial );
 }
 
 void serialEvent2(){
-    HardwareSerial &mySerial = Serial2;
-    cmd = 0;
+    readSerial( Serial2 );
+}
 
+void readSerial( HardwareSerial & mySerial ){
     if( mySerial.available() ){
         cmd = mySerial.read();
+        Serial.println( "Command received: " + String( cmd ) );
     }
     mySerial.flush();
 }
