@@ -47,6 +47,13 @@ connection.onstreamended = event => {
     if( mediaElement ) {
         mediaElement.parentNode.removeChild( mediaElement );
     }
+
+    let videos = connection.videosContainer.querySelectorAll( 'video' );
+    videos[ videos.length - 1 ].classList.toggle( 'full', true );
+    if( videos.length == 2 ){
+        videos[ 0 ].classList.toggle( 'full', false );
+        videos[ 0 ].classList.toggle( 'second', true );
+    }
 };
 
 // to make it one-to-one

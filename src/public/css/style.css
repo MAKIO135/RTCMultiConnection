@@ -14,7 +14,7 @@ body{
 }
 
 video{
-    position:absolute;
+    position: absolute;
 }
 
 .second{
@@ -82,7 +82,7 @@ ul.dropdown-content.select-dropdown li span {
 
 }
 
-.up 
+.up
 {
     -webkit-transform: rotate(90deg);
     -moz-transform: rotate(90deg);

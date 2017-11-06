@@ -37,5 +37,9 @@ app.get( '/', ( req, res ) => {
 } );
 
 app.get( '/robot', ( req, res ) => {
-	res.sendFile( __dirname + '/public/index_robot.html' );
+	res.sendFile( __dirname + '/public/robot.html' );
+} );
+
+app.get( '/debug', ( req, res ) => {
+	res.sendFile( __dirname + '/public/debug.html' );
 } );
