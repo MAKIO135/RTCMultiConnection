@@ -12,9 +12,9 @@ function getSelectedText(elementId) {
 }
 
 // mobileConsole
-// addEventListener( 'load', e => {
-//     mobileConsole.init();
-// } );
+addEventListener( 'load', e => {
+    mobileConsole.init();
+} );
 
 // Blue web
 let terminal = new BluetoothTerminal();
@@ -25,7 +25,7 @@ terminal.receive = data => {
 
 terminal._log = ( ...messages ) => {
     messages.forEach( message => {
-        console.log( message );
+        if( message ) console.log( message );
         // let p = document.createElement( 'p' );
         // p.innerText = message;
         // document.body.appendChild(p);
