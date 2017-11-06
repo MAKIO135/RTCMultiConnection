@@ -90,9 +90,11 @@ document.querySelector( '#open-room' ).addEventListener( 'click', () => {
 
     function sendCmd() {
         if (cmd != '' ) {
-            println( `sending ${ cmd }` );
             if( useBT ){
-                terminal.send( cmd ).then( () => println( data, 'out' ) ).catch( error => println( error ) );
+                terminal.send( cmd ).then( () => println( cmd, 'out' ) ).catch( error => println( error ) );
+            }
+            else{
+                println( `sending ${ cmd }` );
             }
             setTimeout( sendCmd, 400 );
         }
