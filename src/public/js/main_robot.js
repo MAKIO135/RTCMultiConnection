@@ -59,7 +59,7 @@ document.querySelector( '#open-room' ).addEventListener( 'click', () => {
         } );
     }
 
-    connection.open( 'debug-' + roomid, () => {
+    connection.open( roomid, () => {
         document.querySelector( '#pre-room' ).classList.toggle( 'hidden' );
         document.querySelector( '#in-room' ).classList.toggle( 'hidden' );
         document.querySelector('#mainContainer').classList.toggle('bottom');
