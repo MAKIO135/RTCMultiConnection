@@ -83,12 +83,12 @@ void loop(){
                 break;
 
             case TURN_LEFT:
-                timeout = 100;
+                timeout = 50;
                 Ubbo.doMovement( Omni4WD::STAT_TURN_LEFT, iSpeedTurn );
                 break;
 
             case TURN_RIGHT:
-                timeout = 100;
+                timeout = 50;
                 Ubbo.doMovement( Omni4WD::STAT_TURN_RIGHT, iSpeedTurn );
                 break;
 
