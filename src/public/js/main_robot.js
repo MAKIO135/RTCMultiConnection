@@ -1,5 +1,4 @@
 const localhost = window.location.origin.includes( 'localhost' );
-
 if( !localhost ){
     if (location.protocol != 'https:'){
         location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
@@ -7,18 +6,7 @@ if( !localhost ){
 }
 
 // logger
-const log = document.createElement( 'p' );
-log.style.width = '100vw';
-log.style.height = '50px';
-log.style.overflowY = 'scroll';
-log.style.position = 'absolute';
-log.style.top = '0';
-log.style.left = '0';
-log.style.background = 'black';
-log.style.color = 'white';
-log.style.fontFamily = 'monospace';
-document.body.appendChild( log );
-
+const log = document.getElementById( 'log' );
 function println(){
     [ ...arguments ].forEach( arg => {
         log.innerHTML += arg + '<br>';

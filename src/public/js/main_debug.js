@@ -1,5 +1,4 @@
 const localhost = window.location.origin.includes( 'localhost' );
-
 if( !localhost ){
     if (location.protocol != 'https:'){
         location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
@@ -7,18 +6,7 @@ if( !localhost ){
 }
 
 // logger
-const log = document.createElement( 'p' );
-log.style.width = '100vw';
-log.style.height = '50px';
-log.style.overflowY = 'scroll';
-log.style.position = 'absolute';
-log.style.top = '0';
-log.style.left = '0';
-log.style.background = 'black';
-log.style.color = 'white';
-log.style.fontFamily = 'monospace';
-document.body.appendChild( log );
-
+const log = document.getElementById( 'log' );
 function println(){
     [ ...arguments ].forEach( arg => {
         log.innerHTML += arg + '<br>';
@@ -42,11 +30,7 @@ terminal._log = ( ...messages ) => {
 
 // UI / buttons events
 document.querySelector( '#open-room' ).addEventListener( 'click', () => {
-    let roomid = document.querySelector( '#room-id' ).value;
-
-    document.getElementById('robotName').innerHTML = 'Robot ' + getSelectedText('room-id');
-
-    localStorage.setItem( connection.socketMessageEvent, roomid );
+    log.style.height = '50vh';
 
     if( useBT ){
         terminal.connect().then( () => {
@@ -54,37 +38,23 @@ document.querySelector( '#open-room' ).addEventListener( 'click', () => {
         } );
     }
 
-    connection.open( 'debug-' + roomid, () => {
-        document.querySelector( '#pre-room' ).classList.toggle( 'hidden' );
-        document.querySelector( '#in-room' ).classList.toggle( 'hidden' );
-        document.querySelector('#mainContainer').classList.toggle('bottom');
-        println( `Join bot here: https://makerschat.herokuapp.com/#${ connection.sessionid }` );
+    document.querySelector( '#pre-room' ).classList.toggle( 'hidden' );
+    document.querySelector( '#in-room' ).classList.toggle( 'hidden' );
+    document.querySelector( '#mainContainer' ).classList.toggle( 'bottom' );
 
-        connection.getSocket( socket => {
-            socket.on( 'cmd', data => {
-                println( data );
-                if( data.roomid === roomid ){
-                    if( useBT ){
-                        terminal.send( data.cmd ).then( () => println( data + ' out' ) ).catch( error => println( error ) );
-                    }
-                }
-            } );
+    let cmd = '';
+    document.querySelectorAll('.cmd-btn').forEach( d => {
+        d.addEventListener( 'mousedown', e => {
+            cmd = d.dataset.cmd;
+            sendCmd();
+        } );
+        d.addEventListener( 'mouseup', e => {
+            cmd = '';
         } );
     } );
 
-    let cmd = '';
-    document.querySelectorAll('.cmd-btn').forEach(d => {
-        d.addEventListener('mousedown', e => {
-            cmd = d.dataset.cmd;
-            sendCmd();
-        });
-        d.addEventListener('mouseup', e => {
-            cmd = '';
-        });
-    });
-
     function sendCmd() {
-        if (cmd != '' ) {
+        if ( cmd ) {
             if( useBT ){
                 terminal.send( cmd ).then( () => println( cmd + ' out' ) ).catch( error => println( error ) );
             }

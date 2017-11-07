@@ -1,5 +1,4 @@
 const localhost = window.location.origin.includes( 'localhost' );
-
 if( !localhost ){
     if (location.protocol != 'https:'){
         location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
@@ -57,8 +56,8 @@ document.querySelector('#join-room').addEventListener('click', e => {
     });
 
     function sendCmd() {
-        if (cmd != '' && socketReady) {
-            socket.emit('cmd', { roomid, cmd });
+        if ( cmd && socketReady ) {
+            socket.emit( 'cmd', { roomid, cmd } );
             setTimeout( sendCmd, 400 );
         }
     }
