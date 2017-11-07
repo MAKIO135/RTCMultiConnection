@@ -1,5 +1,12 @@
-const useBT = ! window.location.origin.includes( 'localhost' );
+const localhost = window.location.origin.includes( 'localhost' );
 
+if( !localhost ){
+    if (location.protocol != 'https:'){
+        location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+    }
+}
+
+// logger
 const log = document.createElement( 'p' );
 log.style.width = '100vw';
 log.style.height = '50px';
@@ -19,20 +26,8 @@ function println(){
     } );
 }
 
-$(document).ready(function () {
-    $('select').material_select();
-});
-
-function getSelectedText(elementId) {
-    var elt = document.getElementById(elementId);
-
-    if (elt.selectedIndex == -1)
-        return null;
-
-    return elt.options[elt.selectedIndex].text;
-}
-
 // Blue web
+const useBT = ! localhost;
 let terminal = new BluetoothTerminal();
 
 terminal.receive = data => {
@@ -100,3 +95,17 @@ document.querySelector( '#open-room' ).addEventListener( 'click', () => {
         }
     }
 } );
+
+// utils
+$(document).ready(function () {
+    $('select').material_select();
+});
+
+function getSelectedText(elementId) {
+    var elt = document.getElementById(elementId);
+
+    if (elt.selectedIndex == -1)
+        return null;
+
+    return elt.options[elt.selectedIndex].text;
+}

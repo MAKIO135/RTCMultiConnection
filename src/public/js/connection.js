@@ -19,6 +19,15 @@ connection.sdpConstraints.mandatory = {
     OfferToReceiveVideo: true
 };
 
+connection.mediaConstraints = {
+    video: {
+        mandatory: {
+            maxWidth: 320,
+            maxHeight: 180
+        }
+    }
+};
+
 connection.videosContainer = document.querySelector( '#videos-container' );
 connection.onstream = event => {
     let mediaElement = getMediaElement( event.mediaElement, {

@@ -1,14 +1,9 @@
-$(document).ready(function () {
-    $('select').material_select();
-});
+const localhost = window.location.origin.includes( 'localhost' );
 
-function getSelectedText(elementId) {
-    var elt = document.getElementById(elementId);
-
-    if (elt.selectedIndex == -1)
-        return null;
-
-    return elt.options[elt.selectedIndex].text;
+if( !localhost ){
+    if (location.protocol != 'https:'){
+        location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+    }
 }
 
 document.querySelector('#join-room').addEventListener('click', e => {
@@ -68,3 +63,17 @@ document.querySelector('#join-room').addEventListener('click', e => {
         }
     }
 });
+
+//utils
+$(document).ready(function () {
+    $('select').material_select();
+});
+
+function getSelectedText(elementId) {
+    var elt = document.getElementById(elementId);
+
+    if (elt.selectedIndex == -1)
+        return null;
+
+    return elt.options[elt.selectedIndex].text;
+}
