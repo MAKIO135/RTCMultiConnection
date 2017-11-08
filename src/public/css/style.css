@@ -158,12 +158,6 @@ ul.dropdown-content.select-dropdown li span {
     font-family: monospace;
 }
 
-#close{
-    position: absolute;
-    right: 20px;
-    top: 10px;
-}
-
 .cmd-btn{
     cursor: pointer;
 }
