@@ -31,7 +31,6 @@ terminal._log = ( ...messages ) => {
 // UI / buttons events
 document.querySelector( '#open-room' ).addEventListener( 'click', () => {
     log.style.height = '50px';
-    
     let roomid = document.querySelector( '#room-id' ).value;
 
     document.getElementById('robotName').innerHTML = 'Robot ' + getSelectedText('room-id');
