@@ -19,12 +19,14 @@ connection.sdpConstraints.mandatory = {
     OfferToReceiveVideo: true
 };
 
-// connection.mediaConstraints.video = {
-//     mandatory: {
-//         maxWidth: 320,
-//         maxHeight: 180
-//     }
-// };
+connection.mediaConstraints.video = {
+    frameRate: {
+        ideal: 20,
+        max: 30
+    },
+    width: { ideal: 320 },
+    height: { ideal: 180 }
+};
 
 connection.videosContainer = document.querySelector( '#videos-container' );
 connection.onstream = event => {
