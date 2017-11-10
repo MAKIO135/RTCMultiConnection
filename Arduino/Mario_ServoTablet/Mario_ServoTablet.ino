@@ -32,11 +32,12 @@ void loop(){
 void serialEvent(){
     if ( Serial.available() > 0 ){
         char cmd = Serial.read();
-        // Serial.println( cmd );
         if( cmd == DOWN ){
+            Serial.println( "command received: " + String( cmd ) );
             desired -= 5;
         }
         else if( cmd == UP){
+            Serial.println( "command received: " + String( cmd ) );
             desired += 5;
         }
         desired = constrain( desired, 0, 60 );
