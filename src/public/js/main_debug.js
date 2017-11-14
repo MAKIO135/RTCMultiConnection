@@ -30,6 +30,7 @@ terminal._log = ( ...messages ) => {
 
 // UI / buttons events
 document.querySelector( '#open-room' ).addEventListener( 'click', () => {
+    const roomid = document.querySelector('#room-id').value;
     log.style.height = '50vh';
 
     if( useBT ){
@@ -53,12 +54,23 @@ document.querySelector( '#open-room' ).addEventListener( 'click', () => {
         } );
     } );
 
+    const socket = io();
+    socket.on( 'cmd', data => {
+        println( data );
+        if( data.roomid === roomid ){
+            if( useBT ){
+                terminal.send( data.cmd ).then( () => println( data + ' out' ) ).catch( error => println( error ) );
+            }
+        }
+    } );
+
     function sendCmd() {
         if ( cmd ) {
             if( useBT ){
                 terminal.send( cmd ).then( () => println( cmd + ' out' ) ).catch( error => println( error ) );
             }
             else{
+                socket.emit( 'cmd', { roomid, cmd } );
                 println( `sending ${ cmd }` );
             }
             setTimeout( sendCmd, 400 );
