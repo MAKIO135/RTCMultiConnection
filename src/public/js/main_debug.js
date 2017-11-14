@@ -66,13 +66,13 @@ document.querySelector( '#open-room' ).addEventListener( 'click', () => {
 
     function sendCmd() {
         if ( cmd ) {
-            if( useBT ){
-                terminal.send( cmd ).then( () => println( cmd + ' out' ) ).catch( error => println( error ) );
-            }
-            else{
-                socket.emit( 'cmd', { roomid, cmd } );
-                println( `sending ${ cmd }` );
-            }
+            socket.emit( 'cmd', { roomid, cmd } );
+            println( `sending ${ cmd }` );
+            // if( useBT ){
+                // terminal.send( cmd ).then( () => println( cmd + ' out' ) ).catch( error => println( error ) );
+            // }
+            // else{
+            // }
             setTimeout( sendCmd, 400 );
         }
     }
