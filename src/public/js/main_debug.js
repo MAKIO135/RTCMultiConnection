@@ -15,7 +15,7 @@ function println(){
 }
 
 // Blue web
-const useBT = ! localhost;
+let useBT = ! localhost;
 let terminal = new BluetoothTerminal();
 
 terminal.receive = data => {
