@@ -1,6 +1,15 @@
+const fs = require( 'fs' );
+const key = fs.readFileSync( './src/keys/privatekey.pem' );
+const cert = fs.readFileSync( './src/keys/certificate.pem' );
+const https_options = {
+    key: key,
+    cert: cert
+};
+
 const express = require( 'express' );
 const app = express();
-const server = require( 'http' ).Server( app );
+// const server = require( 'http' ).Server( app );
+const server = require( 'https' ).createServer( https_options, app );
 
 
 const port = process.env.PORT || 9001;
