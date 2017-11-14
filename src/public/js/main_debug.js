@@ -56,7 +56,7 @@ document.querySelector( '#open-room' ).addEventListener( 'click', () => {
 
     const socket = io();
     socket.on( 'cmd', data => {
-        println( data );
+        println( ...data );
         if( data.roomid === roomid ){
             if( useBT ){
                 terminal.send( data.cmd ).then( () => println( data + ' out' ) ).catch( error => println( error ) );
