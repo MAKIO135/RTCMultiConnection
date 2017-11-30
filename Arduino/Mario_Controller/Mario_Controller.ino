@@ -70,15 +70,16 @@ void setup(){
 
 void loop(){
     if( cmd != 0 ){
-        timeout = 500;
         timer = millis();
 
         switch ( cmd ) {
             case GO_FORWARD:
+                timeout = 500;
                 Ubbo.doMovement( Omni4WD::STAT_MOVE_FORWARD, iSpeed );
                 break;
 
             case GO_BACKWARD:
+                timeout = 500;
                 Ubbo.doMovement( Omni4WD::STAT_MOVE_BACKWARD, iSpeed );
                 break;
 
@@ -93,19 +94,23 @@ void loop(){
                 break;
 
             case TRANSLATE_LEFT:
+                timeout = 500;
                 Ubbo.doMovement( Omni4WD::STAT_TRANSLATE_LEFT, iSpeedTranslate );
                 break;
 
             case TRANSLATE_RIGHT:
+                timeout = 500;
                 Ubbo.doMovement( Omni4WD::STAT_TRANSLATE_RIGHT, iSpeedTranslate );
                 break;
 
             case STOP:
+                timeout = 50;
                 Ubbo.doMovement( Omni4WD::STAT_STOP );
                 break;
 
             case MOVE_TABLET_UP: // Move Tablet Servo
             case MOVE_TABLET_DOWN: // Move Tablet Servo
+                timeout = 50;
                 Serial3.write( cmd );
                 break;
 

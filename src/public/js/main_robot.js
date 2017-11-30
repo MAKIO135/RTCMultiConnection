@@ -53,7 +53,7 @@ document.querySelector( '#open-room' ).addEventListener( 'click', () => {
             socket.on( 'cmd', data => {
                 println( data );
                 if( data.roomid === roomid ){
-                    if( useBT ){
+                    if( useBT && Date.now() - data.ts < 1000 ){
                         terminal.send( data.cmd ).then( () => println( data + ' out' ) ).catch( error => println( error ) );
                     }
                 }

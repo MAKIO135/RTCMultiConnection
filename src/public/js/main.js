@@ -57,7 +57,7 @@ document.querySelector('#join-room').addEventListener('click', e => {
 
     function sendCmd() {
         if ( cmd && socketReady ) {
-            socket.emit( 'cmd', { roomid, cmd } );
+            socket.emit( 'cmd', { roomid, cmd, ts: Date.now() } );
             setTimeout( sendCmd, 400 );
         }
     }

@@ -15,7 +15,7 @@ function println(){
 }
 
 // Blue web
-let useBT = ! localhost;
+let useBT = !localhost && navigator.bluetooth;
 let terminal = new BluetoothTerminal();
 
 terminal.receive = data => {
@@ -58,7 +58,7 @@ document.querySelector( '#open-room' ).addEventListener( 'click', () => {
     socket.on( 'cmd', data => {
         if( data.roomid === roomid ){
             println( `incoming: ${data.cmd}` );
-            if( useBT ){
+            if( useBT && Date.now() - data.ts < 1000 ){
                 terminal.send( data.cmd ).then( () => println( data + ' out' ) ).catch( error => println( error ) );
             }
         }
@@ -66,7 +66,7 @@ document.querySelector( '#open-room' ).addEventListener( 'click', () => {
 
     function sendCmd() {
         if ( cmd ) {
-            socket.emit( 'cmd', { roomid, cmd } );
+            socket.emit( 'cmd', { roomid, cmd, ts: Date.now() } );
             println( `sending ${ cmd }` );
             // if( useBT ){
                 // terminal.send( cmd ).then( () => println( cmd + ' out' ) ).catch( error => println( error ) );
