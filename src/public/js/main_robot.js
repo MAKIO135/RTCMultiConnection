@@ -1,13 +1,13 @@
 const localhost = window.location.origin.includes( 'localhost' );
-if( !localhost ){
-    if (location.protocol != 'https:'){
-        location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+if( !localhost ) {
+    if ( location.protocol != 'https:' ) {
+        location.href = 'https:' + window.location.href.substring( window.location.protocol.length );
     }
 }
 
 // logger
 const log = document.getElementById( 'log' );
-function println(){
+function println() {
     [ ...arguments ].forEach( arg => {
         log.innerHTML += arg + '<br>';
         log.scrollTop += 50;
@@ -33,7 +33,7 @@ document.querySelector( '#open-room' ).addEventListener( 'click', () => {
     log.style.height = '50px';
     let roomid = document.querySelector( '#room-id' ).value;
 
-    document.getElementById('robotName').innerHTML = 'Robot ' + getSelectedText('room-id');
+    document.getElementById( 'robotName' ).innerHTML = 'Robot ' + getSelectedText( 'room-id' );
 
     localStorage.setItem( connection.socketMessageEvent, roomid );
 
@@ -46,7 +46,7 @@ document.querySelector( '#open-room' ).addEventListener( 'click', () => {
     connection.open( roomid, () => {
         document.querySelector( '#pre-room' ).classList.toggle( 'hidden' );
         document.querySelector( '#in-room' ).classList.toggle( 'hidden' );
-        document.querySelector('#mainContainer').classList.toggle('bottom');
+        document.querySelector( '#mainContainer' ).classList.toggle( 'bottom' );
         println( `Join bot here: https://makerschat.herokuapp.com/#${ connection.sessionid }` );
 
         connection.getSocket( socket => {
@@ -63,15 +63,13 @@ document.querySelector( '#open-room' ).addEventListener( 'click', () => {
 } );
 
 // utils
-$(document).ready(function () {
-    $('select').material_select();
-});
+$( document ).ready( () => $( 'select' ).material_select() );
 
-function getSelectedText(elementId) {
-    let elt = document.getElementById(elementId);
+function getSelectedText( elementId ) {
+    let elt = document.getElementById( elementId );
 
-    if (elt.selectedIndex == -1)
+    if ( elt.selectedIndex == -1 )
         return null;
 
-    return elt.options[elt.selectedIndex].text;
+    return elt.options[ elt.selectedIndex ].text;
 }
